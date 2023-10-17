@@ -1,8 +1,9 @@
 import requests
 import argparse
+import datetime
 
 def send_message(username, message):
-    data = {'username': username, 'message': message}
+    data = {'username': username, 'message': message, "timestamp": datetime.datetime.now().timestamp()}
     response = requests.post(f'{server_url}/send', json=data)
     if response.status_code == 200:
         print('Message sent successfully')
