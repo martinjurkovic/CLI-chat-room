@@ -1,6 +1,5 @@
 import requests
-
-server_url = 'http://127.0.0.1:8000/'
+import argparse
 
 def send_message(username, message):
     data = {'username': username, 'message': message}
@@ -20,17 +19,15 @@ def get_messages():
         print('Failed to retrieve messages')
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('server_url', help='URL of the chat server')
+    args = parser.parse_args()
+
+    server_url = args.server_url
     username = input('Enter your username: ')
     while True:
-        action = input('Enter 1 to send a message, 2 to get messages: ')
-        if action == '1':
-            message = input('Enter your message: ')
-            send_message(username, message)
-        elif action == '2':
-            get_messages()
-        else:
-            print('Invalid choice')
-
+        message = input('Enter your message: ')
+        send_message(username, message)
 
 
 

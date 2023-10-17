@@ -1,15 +1,12 @@
 import requests
 import time
 from datetime import datetime
-
-server_url = 'http://127.0.0.1:8000/'
-last_timestamp = 0
+import argparse
 
 def convert_timestamp_to_time(timestamp):
     return datetime.fromtimestamp(timestamp).strftime('%H:%M:%S')
 
-def get_messages():
-    global last_timestamp
+def get_messages(server_url, last_timestamp):
     response = requests.get(f'{server_url}/get_messages')
     if response.status_code == 200:
         messages = response.json().get('messages', [])
@@ -21,8 +18,16 @@ def get_messages():
                 last_timestamp = message_time
     else:
         print('Failed to retrieve messages')
+    return last_timestamp
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('server_url', help='URL of the chat server')
+    args = parser.parse_args()
+
+    server_url = args.server_url
+    last_timestamp = 0
+
     while True:
-        get_messages()
-        time.sleep(1) 
+        last_timestamp = get_messages(server_url, last_timestamp)
+        time.sleep(1)  # Adjust the polling interval as needed (e.g., 1 second)

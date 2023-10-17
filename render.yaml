@@ -5,7 +5,7 @@ services:
     name: json_viewer
     env: python
     buildCommand: "./build.sh"
-    startCommand: "gunicorn app:app"
+    startCommand: "gunicorn app:app --bind=localhost:8000"
     envVars:
       - key: SECRET_KEY
         generateValue: true
