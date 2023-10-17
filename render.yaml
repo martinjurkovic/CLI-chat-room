@@ -2,7 +2,7 @@ services:
   - type: web
     plan: free
     region: frankfurt
-    name: json_viewer
+    name: cli-chat-room
     env: python
     buildCommand: "./build.sh"
     startCommand: "gunicorn app:app --bind=0.0.0.0:8000"
